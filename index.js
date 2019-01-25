@@ -81,28 +81,50 @@ controller.on('rtm_close', function (bot) {
  */
 // BEGIN EDITING HERE!
 
-controller.on('bot_channel_join', function (bot, message) {
-    bot.reply(message, "I'm here!")
+controller.hears('testparam', 'direct_mention', function (bot, message) {
+	// Split the message into params
+    var params = message.text.split(" ");
+	
+	// Remove the first entry, its the command.
+	params.shift();
+	
+	var reply = "";
+	
+	for(var i = 0; i < params.length; i++) {
+		reply += "\n[" + i +"]: " + params[i];
+	}
+	
+	bot.reply(message, reply);
 });
 
-controller.hears('hello', 'direct_message', function (bot, message) {
-    bot.reply(message, 'Hello!');
-});
+controller.on('slash_command', function (slashCommand, message) {
 
+    switch (message.command) {
+        case "/remindon": //handle the `/remindon` slash command. We might have others assigned to this app too!
+            // The rules are simple: If there is no text following the command, treat it as though they had requested "help"
+            // Otherwise just echo back to them what they sent us.
 
-/**
- * AN example of what could be:
- * Any un-handled direct mention gets a reaction and a pat response!
- */
-//controller.on('direct_message,mention,direct_mention', function (bot, message) {
-//    bot.api.reactions.add({
-//        timestamp: message.ts,
-//        channel: message.channel,
-//        name: 'robot_face',
-//    }, function (err) {
-//        if (err) {
-//            console.log(err)
-//        }
-//        bot.reply(message, 'I heard you loud and clear boss.');
-//    });
-//});
+            // if no text was supplied, treat it as a help command
+            if (message.text === "" || message.text === "help" || message.text === "?") {
+                slashCommand.replyPrivate(message,
+                    "Use this command to create a weekly reminder:" +
+                    "/remindon friday to test your app!");
+                return;
+            }
+
+			// Split the message into params
+			var params = message.text.split(" ");
+			
+			// Remove the first entry, its the command.
+			params.shift();
+			
+            slashCommand.replyPublic(message, JSON.stringify(params));
+
+            break;
+        default:
+            slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + " yet.");
+
+    }
+
+})
+;

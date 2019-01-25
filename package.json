@@ -1,7 +1,7 @@
 {
-  "name": "easy-peasy-bot",
+  "name": "ProjectTesterReminder",
   "version": "1.0.0",
-  "description": "The awesomest bot evar.",
+  "description": "Tells you on a specified day to test the app.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -15,12 +15,12 @@
     "slack",
     "bot"
   ],
-  "author": "D.E. Goodman-Wilson",
+  "author": "Ferdi Alleman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DEGoodmanWilson/easy-peasy-bot-app/issues"
+    "url": "https://github.com/IntoVirtualDevelopment/easy-peasy-bot/issues"
   },
-  "homepage": "https://github.com/DEGoodmanWilson/easy-peasy-bot-app#readme",
+  "homepage": "https://github.com/IntoVirtualDevelopment/easy-peasy-bot#readme",
   "engines": {
     "node": "5.1.1"
   },
